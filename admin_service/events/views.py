@@ -50,10 +50,17 @@ class EventsList(MethodView):
 events.add_url_rule('list', view_func=login_required(EventsList.as_view('events_list')))
 
 
+def strip_newlines(data):
+    data = data.strip("<br>")
+    data = data.strip("<p><br></p>")
+    data = data.strip()
+    return data
+
+
 EVENT_CREATION_FORM = t.Dict({
                              'title': t.String,
-                             'agenda': t.String,
-                             'social': t.String(allow_blank=True),
+                             'agenda': t.String >> strip_newlines,
+                             'social': t.String(allow_blank=True) >> strip_newlines,
                              'place': t.String(allow_blank=True),
                              'registration_url': t.URL(allow_blank=True),
                              'image_url': t.URL(allow_blank=True) | t.String(max_length=0, allow_blank=True),
@@ -118,6 +125,8 @@ def edit_event(id_):
     if request.method == 'POST':
         do_edit_event(id_)
         if not g.errors:
+            if request.form.get('submit') == 'Edit_add_more':
+                return redirect(url_for('events.create_event', added=1))
             return redirect(url_for('events.events_details', id_=id_))
     return render_template('events/event_create.html', errors=g.errors,
                            initial=r,
