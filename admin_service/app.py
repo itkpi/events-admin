@@ -152,8 +152,8 @@ def gvars(app):
         today = datetime.date.today()
         cw_monday = today + datetime.timedelta(days=-today.weekday())
         cw_sunday = today + datetime.timedelta(days=7 - today.weekday())
-        nw_monday = today + datetime.timedelta(days=-today.weekday() + 7)
-        nw_sunday = today + datetime.timedelta(days=7 - today.weekday() + 7)
+        nw_monday = today + datetime.timedelta(days=-today.weekday() + 6)
+        nw_sunday = today + datetime.timedelta(days=7 - today.weekday() + 6)
         return dict(cw_monday=cw_monday,
                     cw_sunday=cw_sunday,
                     nw_monday=nw_monday,

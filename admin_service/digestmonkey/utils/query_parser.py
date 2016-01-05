@@ -18,7 +18,10 @@ def parse_named_values(query):
             if node.func.id == 'named_value':
                 if not isinstance(node.args[0], ast.Str):
                     raise TypeError(node.args[0])
-                values[node.args[0].s] = _eval(node.args[1])
+                if len(node.args) == 3:
+                    values[node.args[0].s] = _eval(node.args[2])
+                else:
+                    values[node.args[0].s] = _eval(node.args[1])
             else:
                 raise TypeError(node)
         elif isinstance(node, ast.Compare):
