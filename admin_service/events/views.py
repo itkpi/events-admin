@@ -53,7 +53,7 @@ events.add_url_rule('list', view_func=login_required(EventsList.as_view('events_
 
 def strip_newlines(data):
     data = data.strip()
-    data = re.sub(r'(<br/>|<br>|<p><br></p>)*$', '', data)
+    data = re.sub(r'(<br/>|<br>|<p><br></p>|<p></p>)*$', '', data)
     data = data.strip()
     return data
 
