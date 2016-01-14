@@ -1,8 +1,11 @@
-sudo: required
-dist: trusty
+sudo: false
 install:
-- "curl http://files.zerogw.com/vagga/vagga-install.sh | sh"
+- wget http://files.zerogw.com/vagga/vagga-0.4.1.tar.xz -O vagga.tar.xz
+- tar -xzvf vagga.tar.xz
+# - "curl http://files.zerogw.com/vagga/vagga-install.sh | sh"
 - "echo ubuntu-mirror: http://mirrors.us.kernel.org/ubuntu/ > ~/.vagga.yaml"
 - "echo alpine-mirror: http://mirrors.gigenet.com/alpinelinux/ >> ~/.vagga.yaml"
+before_script:
+- export PATH=$PATH:$PWD/bin
 script:
 - vagga _build admin_service
