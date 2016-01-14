@@ -1,13 +1,21 @@
-sudo: false
+sudo: required
+dist: trusty
 install:
-- wget http://files.zerogw.com/vagga/vagga-0.4.1.tar.xz -O vagga.tar.xz
-- tar -xvf vagga.tar.xz
-# - "curl http://files.zerogw.com/vagga/vagga-install.sh | sh"
-- echo "$PWD"
+- "curl http://files.zerogw.com/vagga/vagga-install.sh | sh"
 - "echo ubuntu-mirror: http://mirrors.us.kernel.org/ubuntu/ > ~/.vagga.yaml"
 - "echo alpine-mirror: http://mirrors.gigenet.com/alpinelinux/ >> ~/.vagga.yaml"
-before_script:
-- echo "$PWD"
-- export PATH=$PATH:$PWD/vagga
 script:
 - vagga _build admin_service
+- cp -R * .vagga/admin_service/work/
+- echo nameserver 8.8.8.8 > .vagga/admin_service/etc/resolv.conf
+- echo 127.0.0.1 localhost > .vagga/admin_service/etc/hosts
+- export FILENAME=admin_service_$(date '+%Y_%m_%d__%H_%M_%S').tar.gz
+- tar zcf /tmp/$FILENAME -C $(readlink -f .vagga/admin_service) ./
+- echo $FILENAME > /tmp/latest_info
+- date >> /tmp/latest_info
+- git rev-parse HEAD >> /tmp/latest_info
+
+
+after_success:
+  "curl --ftp-create-dirs -T /tmp/$FILENAME -u $ftpuser:$ftppass ftp://sitename.com/admin_service/latest.tar.gz"
+  "curl --ftp-create-dirs -T /tmp/latest_info -u $ftpuser:$ftppass ftp://sitename.com/admin_service/latest_info"
