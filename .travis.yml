@@ -3,9 +3,11 @@ install:
 - wget http://files.zerogw.com/vagga/vagga-0.4.1.tar.xz -O vagga.tar.xz
 - tar -xvf vagga.tar.xz
 # - "curl http://files.zerogw.com/vagga/vagga-install.sh | sh"
+- echo "$PWD"
 - "echo ubuntu-mirror: http://mirrors.us.kernel.org/ubuntu/ > ~/.vagga.yaml"
 - "echo alpine-mirror: http://mirrors.gigenet.com/alpinelinux/ >> ~/.vagga.yaml"
 before_script:
-- export PATH=$PATH:$PWD/bin
+- echo "$PWD"
+- export PATH=$PATH:$PWD/vagga
 script:
 - vagga _build admin_service
