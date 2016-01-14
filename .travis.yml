@@ -10,6 +10,7 @@ script:
 - echo nameserver 8.8.8.8 > .vagga/admin_service/etc/resolv.conf
 - echo 127.0.0.1 localhost > .vagga/admin_service/etc/hosts
 - export FILENAME=admin_service_$(date '+%Y_%m_%d__%H_%M_%S').tar.gz
+- echo tar zcf /tmp/$FILENAME -C $(readlink -f .vagga/admin_service) ./
 - tar zcf /tmp/$FILENAME -C $(readlink -f .vagga/admin_service) ./
 - echo $FILENAME > /tmp/latest_info
 - date >> /tmp/latest_info
