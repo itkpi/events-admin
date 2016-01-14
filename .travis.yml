@@ -15,7 +15,6 @@ script:
 - date >> /tmp/latest_info
 - git rev-parse HEAD >> /tmp/latest_info
 
-
 after_success:
-  "curl --ftp-create-dirs -T /tmp/$FILENAME -u $ftpuser:$ftppass ftp://sitename.com/admin_service/latest.tar.gz"
-  "curl --ftp-create-dirs -T /tmp/latest_info -u $ftpuser:$ftppass ftp://sitename.com/admin_service/latest_info"
+- "curl --ftp-create-dirs -T /tmp/$FILENAME -u $ftpuser:$ftppass ftp://sitename.com/admin_service/latest.tar.gz"
+- "curl --ftp-create-dirs -T /tmp/latest_info -u $ftpuser:$ftppass ftp://sitename.com/admin_service/latest_info"
