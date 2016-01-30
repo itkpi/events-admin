@@ -29,6 +29,7 @@
         </fieldset>
     </div>
     <div class="span-4">
+        {% if same_day_events.events %}
         <fieldset class="flakes-information-box">
             <legend>Information</legend>
             <div class="grid-1">
@@ -48,6 +49,7 @@
                 </dl>
             </div>
         </fieldset>
+        {% endif %}
         <fieldset class="flakes-information-box">
             <legend>Details</legend>
 
