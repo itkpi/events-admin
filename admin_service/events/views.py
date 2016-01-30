@@ -13,6 +13,7 @@ from admin_service.events.models import SuggestedEvent
 from ..extensions import pages, csrf, cache, db
 import trafaret as t
 import dateutil.parser
+from datetime import datetime
 
 
 events = Blueprint('events', __name__, url_prefix='/events/', template_folder="templates")
@@ -201,8 +202,16 @@ events.add_url_rule('suggested/list',
 @login_required
 def suggested_events_details(secret):
     event = SuggestedEvent.query.get(secret)
+    date_formatted = datetime.strftime(event.when_start, "%m.%d.%Y")
+    r = current_app.events_api.get_events(g.user.team.events_token,
+                                          offset=0,
+                                          count=50,
+                                          sorting='when_start',
+                                          query="when_start >= '{} 00:00' and when_start <= '{} 23:59'".format(date_formatted, date_formatted))
+    print("when_start >= '{}' and when_start <= '{}'".format(date_formatted, date_formatted))
     return render_template('events/suggested_event_details.html',
-                           event=event)
+                           event=event,
+                           same_day_events=r)
 
 
 @events.route('suggested/accept/<secret>', methods=['GET', 'POST'])

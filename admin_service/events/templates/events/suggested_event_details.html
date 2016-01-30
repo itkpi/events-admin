@@ -30,6 +30,25 @@
     </div>
     <div class="span-4">
         <fieldset class="flakes-information-box">
+            <legend>Information</legend>
+            <div class="grid-1">
+                <dl class="span-1">
+                    <p class="flakes-message tip"><i class="fa fa-exclamation-triangle"></i>Please check that the event you're going to accept is not the duplicate of following events that are already in the database
+                    </p>
+                    <dt>Events in database planned on same day</dt>
+                    <dd>
+                        <ul>
+                        {% for event in same_day_events.events %}
+                            <li>
+                                <a href="{{ url_for('events.events_details', id_=event.id) }}" target="_blank">{{event.title}}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+        </fieldset>
+        <fieldset class="flakes-information-box">
             <legend>Details</legend>
 
             <div class="grid-1">
