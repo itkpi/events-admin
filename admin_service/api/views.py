@@ -20,7 +20,7 @@ def get_team_by_name(name):
 EVENT_SUGGESTION_TRAFARET = t.Dict({
     'title': t.String,
     'agenda': t.String,
-    'social': t.String(allow_blank=True),
+    'social': t.String(allow_blank=True) | t.Null,
     'place': t.String(allow_blank=True),
     'registration_url': t.URL(allow_blank=True) | t.Null,
     'image_url': t.URL(allow_blank=True) | t.String(max_length=0, allow_blank=True),
@@ -32,7 +32,7 @@ EVENT_SUGGESTION_TRAFARET = t.Dict({
     'team': t.String() >> get_team_by_name,
     'submitter_email': t.Email(),
     'secret': t.String
-}).make_optional('secret')
+}).make_optional('secret', 'social')
 
 
 def pre_get_many(**kw):
