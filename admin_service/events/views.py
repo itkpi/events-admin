@@ -221,6 +221,7 @@ def accept_suggested_event(secret):
     if request.method == 'POST':
         id_ = do_create_event()
         if not g.errors:
+            SuggestedEvent.query.filter(SuggestedEvent.secret == secret).delete()
             return redirect(url_for('events.events_details', id_=id_))
 
     initial = request.form.to_dict()
