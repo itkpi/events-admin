@@ -1,0 +1,15 @@
+{
+  "name": "vmstatic",
+  "private": true,
+  "directory": "static/bower_components",
+  "dependencies": {
+    "jquery-1": "jquery#1.8.3+1",
+    "jquery": "jquery#~2.1",
+    "flakes": "*",
+    "jquery-ui": "*",
+    "font-awesome": "*",
+    "datetimepicker": "2.4.5",
+    "redactor": "*"
+  },
+  "devDependencies": {}
+}
